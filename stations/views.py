@@ -25,15 +25,14 @@ def login(request):
         # Pegar Token
         API_ENDPOINT = "http://54.88.109.168/gabrielvvvp/token"
         r = requests.get(url = API_ENDPOINT)
-        token = json.loads(r.text)['token']
-        print(token)
+        token = str(json.loads(r.text)['token'])
         # Request da Imagem
         API_ENDPOINT2 = " http://54.88.109.168/gabrielvvvp/image"
-        r2 = requests.post(url = API_ENDPOINT2, data = {"token": str(token)})
-        imgendpoint = json.loads(r2.text)
-        print(imgendpoint)
+        r2 = requests.post(url = API_ENDPOINT2, data = json.dumps({"token": token}))
+        imgendpoint = str(json.loads(r2.text)['image_uri'])
         # Endereço da Imagem
-        address = " http://54.88.109.168/gabrielvvvp/image"+imgendpoint
+        address = " http://54.88.109.168"+imgendpoint
+        print(address)
         return render(request, 'stations/index.html', {'selo': address})
     else:
         username = request.POST.get('username')
