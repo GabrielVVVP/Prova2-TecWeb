@@ -1,6 +1,8 @@
+# Prova Final - Tecnologias Web
 
-# Projeto2-Aries
-Projeto2-TecWeb
+Para verificar o projeto basta apenas rodar os comandos na pasta principal:
+* source env/bin/activate
+* python3 manage.py runserver
 
 # Comprovação da Prova
 Estas imagens mostram a imagem obtida pela API fornecida no exercício da Prova
