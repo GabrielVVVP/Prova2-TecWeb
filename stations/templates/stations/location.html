@@ -1,0 +1,38 @@
+{% extends "stations/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="appbar">
+    <img src="{% static 'stations/img/Arduino.png' %}" class="logo" />
+    <p style="color:rgb(255, 255, 255);">Aries Micro-Estações</p>
+    <form class="tag" method="GET" action="/menu/{{user_id}}">
+        <button class="mainmenu">Menu Principal</button>
+    </form>
+</div>
+
+<main class="container">
+    <div class="card-container">
+        <div class="card2">
+            <form class="delcont" method="GET" action="/menu/{{user_id}}/delete/parameter/{{parameter.id}}">
+                <button class="delbtn" type="submit"><i class="fa fa-trash"></i></button>
+            </form> 
+            <h3 class="card-title2">{{ station.name }}</h3>
+            <iframe width="100%" height="450" frameborder="0" style="border:0" 
+                src="https://www.google.com/maps/embed/v1/place?q={{coordinates}}&amp;key={{key}}">
+            </iframe>
+            <h3 class="card-title3">Parameter ID: {{ parameter.id }}</h3>
+            <div class="dropdown">
+                <button class="dropbtn">Gráficos</button>
+                <div class="dropdown-content">
+                <a href="/menu/{{user_id}}/data/{{station.name}}/{{parameter.name}}/line" method="GET">line</a>
+                <a href="/menu/{{user_id}}/data/{{station.name}}/{{parameter.name}}/bar" method="GET">bar</a>
+                <a href="/menu/{{user_id}}/data/{{station.name}}/{{parameter.name}}/doughnut" method="GET">doughnut</a>
+                </div>
+            </div>
+            <form class="dropdown" method="GET" action="/menu/{{user_id}}/subscribe/{{station.name}}/{{parameter.name}}">
+                <button class="dropbtn" type="submit">Inscrever</button>
+            </form>    
+        </div>
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "stations/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="appbar">
+    <img src="{% static 'stations/img/Arduino.png' %}" class="logo" />
+    <p class="subtitle">Aries Micro-Estações</p>
+    <form method="GET" action="/">
+        <button class="mainmenu">Log Out</button>
+    </form>
+</div>
+
+<main class="container">
+    <form class="form-card" method="POST" action="/menu/{{user_id}}/">
+        {% csrf_token %}
+        <p class="form-card-title">Aries Micro-Estações</p>
+        <img src="{% static 'stations/img/Arduino.png' %}" class="station-create" />
+        <input
+        class="addstation"
+        id="station-name"
+        type="text"
+        name="station-name"
+        placeholder="Digite o nome da nova estação"
+        />
+        <button class="btn" type="submit">Criar</button>
+    </form>
+    <div class="card-container">
+    {% for station in stations %}
+        <div class="card">
+            <form class="delcont" method="GET" action="/menu/{{user_id}}/delete/station/{{station.id}}">
+                <button class="delbtn" type="submit"><i class="fa fa-trash"></i></button>
+            </form>
+            <p class="card-title">{{station.name}}</p>
+            <div class="dropdown">
+                <button class="dropbtn">Parâmetros</button>
+                <div class="dropdown-content">
+                {% for parameter in parameters %}
+                {% if parameter.station.name == station.name %} 
+                <a href="data/{{station.name}}/{{parameter.name}}" method="GET">{{parameter.name}}</a>
+                {% endif %}
+                {% endfor %}
+                </div>
+            </div>
+            <form method="POST" action="/menu/{{user_id}}/addparam/{{station.name}}">
+                {% csrf_token %}
+                <input
+                class="addparam"
+                id="parameter-name"
+                type="text"
+                name="parameter-name"
+                placeholder="Parametro"
+                />
+                <button class="btn2" type="submit">Adicionar Parametro</button>
+            </form>
+        </div>
+    {% endfor %}
+    </div>
+</main>
+{% endblock %}
